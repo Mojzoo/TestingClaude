@@ -8,10 +8,10 @@ namespace TestingClaude
     public static class AppConfig
     {
         // The Gmail address that will SEND the reset emails
-        public const string SenderEmail    = "YOUR_GMAIL@gmail.com";
+        public const string SenderEmail    = "godmasterzila@gmail.com";
 
         // App Password generated from Google Account settings
-        public const string SenderPassword = "YOUR_APP_PASSWORD";
+        public const string SenderPassword = "skdf zvzh mhhl hvir";
 
         // Display name shown in the email
         public const string SenderName     = "TestingClaude App";

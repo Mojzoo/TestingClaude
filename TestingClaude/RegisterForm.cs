@@ -30,7 +30,7 @@ namespace TestingClaude
         private void btnRegister_Click(object sender, EventArgs e)
         {
             string username        = txtUsername.Text.Trim();
-            string email           = txtEmail.Text.Trim();
+            string email           = txtEmail.Text.Trim().ToLower();
             string password        = txtPassword.Text;
             string confirmPassword = txtConfirmPassword.Text;
 
@@ -38,6 +38,14 @@ namespace TestingClaude
                 string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
             {
                 MessageBox.Show("Please fill in all fields.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Enforce @gmail.com only
+            if (!email.EndsWith("@gmail.com"))
+            {
+                MessageBox.Show("Only @gmail.com email addresses are accepted.", "Invalid Email",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }

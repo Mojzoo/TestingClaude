@@ -76,5 +76,11 @@ namespace TestingClaude
             new RegisterForm().Show();
             this.Hide();
         }
+
+        private void btnForgotPassword_Click(object sender, EventArgs e)
+        {
+            new ForgotPasswordForm().Show();
+            this.Hide();
+        }
     }
 }

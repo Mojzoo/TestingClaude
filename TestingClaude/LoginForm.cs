@@ -46,21 +46,33 @@ namespace TestingClaude
                 using (MySqlConnection conn = dbHelper.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT COUNT(*) FROM users WHERE username=@username AND password=@password";
+                    string query = "SELECT id, role FROM users WHERE username=@username AND password=@password";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@username", username);
                     cmd.Parameters.AddWithValue("@password", hashedPassword);
 
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    if (count > 0)
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        MessageBox.Show("loged in successfully", "Success",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid username or password.", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (reader.Read())
+                        {
+                            int userId = reader.GetInt32("id");
+                            string role = reader.GetString("role");
+                            reader.Close();
+
+                            MessageBox.Show("loged in successfully", "Success",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            this.Hide();
+                            if (role == "admin")
+                                new AdminDashboardForm(userId, username).Show();
+                            else
+                                new RoomBrowseForm(userId, username).Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid username or password.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
